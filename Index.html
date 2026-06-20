@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You, Priya</title>
+    <style>
+        :root {
+            --primary-pink: #ff6b81;
+            --dark-pink: #ff4757;
+            --soft-bg: #fff5f6;
+            --text-color: #4a4a4a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--soft-bg);
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Floating Hearts Background */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Main Premium Card */
+        .container {
+            max-width: 650px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 40px rgba(255, 107, 129, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            text-align: center;
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Cartoon/Animation Section */
+        .animation-box {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Cute Anime/Cartoon Heart Mascot using pure CSS */
+        .cute-mascot {
+            width: 140px;
+            height: 140px;
+            background: var(--primary-pink);
+            position: relative;
+            margin: 30px auto;
+            transform: rotate(-45deg);
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(255, 107, 129, 0.4);
+        }
+
+        .cute-mascot::before, .cute-mascot::after {
+            content: "";
+            width: 140px;
+            height: 140px;
+            background: var(--primary-pink);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .cute-mascot::before { top: -70px; left: 0; }
+        .cute-mascot::after { left: 70px; top: 0; }
+
+        /* Mascot Eyes and Smile (Cartoon effect) */
+        .mascot-face {
+            position: absolute;
+            transform: rotate(45deg);
+            top: 10px;
+            left: 35px;
+            z-index: 10;
+            width: 80px;
+            height: 80px;
+        }
+
+        .eyes {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 25px;
+        }
+
+        .eye {
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            position: relative;
+            animation: blink 4s infinite;
+        }
+
+        .eye::after {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 4px;
+        }
+
+        .smile {
+            width: 24px;
+            height: 12px;
+            border-bottom: 4px solid #fff;
+            border-radius: 0 0 15px 15px;
+            margin: 15px auto 0;
+        }
+
+        .blush {
+            display: flex;
+            justify-content: space-between;
+            width: 110%;
+            margin-left: -5px;
+            position: absolute;
+            top: 40px;
+        }
+
+        .blush-spot {
+            width: 14px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+        }
+
+        /* Typography */
+        h1 {
+            color: var(--dark-pink);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #888;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* Love Letter Envelope / Styling */
+        .love-letter {
+            background: #fff;
+            border-left: 5px solid var(--primary-pink);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: left;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .word-highlight {
+            color: var(--dark-pink);
+            font-weight: 600;
+            border-bottom: 2px dashed var(--primary-pink);
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Interactive Buttons */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 60px;
+        }
+
+        .btn {
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+            color: white;
+            box-shadow: 0 10px 20px rgba(255, 107, 129, 0.3);
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 25px rgba(255, 107, 129, 0.4);
+        }
+
+        .btn-no {
+            background: #f1f2f6;
+            color: #57606f;
+            position: absolute;
+            right: 150px;
+        }
+
+        /* Success Screen Overlay */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+        }
+
+        .success-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.02); }
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <div class="container">
+        <!-- Cartoon Animation Mascot -->
+        <div class="animation-box">
+            <div class="cute-mascot">
+                <div class="mascot-face">
+                    <div class="eyes">
+                        <div class="eye"></div>
+                        <div class="eye"></div>
+                    </div>
+                    <div class="blush">
+                        <div class="blush-spot"></div>
+                        <div class="blush-spot"></div>
+                    </div>
+                    <div class="smile"></div>
+                </div>
+            </div>
+        </div>
+
+        <h1>Hey Priya, ✨</h1>
+        <p class="subtitle">There's something I’ve been wanting to tell you...</p>
+
+        <!-- The Love Letter with Effect/Affect integration -->
+        <div class="love-letter">
+            Dearest Priya, <br><br>
+            Jab se tum meri life me aayi ho, sab kuch badal sa gya hai. I never knew someone could have this kind of impact on me. 
+            <br><br>
+            Your presence has a beautiful <span class="word-highlight" title="Noun: The result or outcome">effect</span> on my entire world—everything suddenly feels brighter, happier, and full of life. It’s amazing how deeply you <span class="word-highlight" title="Verb: To move emotionally / influence">affect</span> my emotions; just a single smile from you can completely change the course of my day. 
+            <br><br>
+            Yeh koi temporary feeling nahi hai, tumne seedhe mere dil pe asar kiya hai. I want to be there for you, to laugh with you, and to hold your hand through everything. 
+            <br><br>
+            <strong>Will you make me the happiest person and be mine? ❤️</strong>
+        </div>
+
+        <!-- Interactive Buttons -->
+        <div class="btn-group">
+            <button class="btn btn-yes" onclick="celebrate()">Yes, I Will! 💍</button>
+            <button class="btn btn-no" id="noBtn" onmouseover="moveNoButton()">No</button>
+        </div>
+    </div>
+
+    <!-- Celebration Screen -->
+    <div class="success-overlay" id="successScreen">
+        <h1 style="font-size: 3.5rem;">Yayyy! 💖🎉</h1>
+        <p style="font-size: 1.5rem; margin-top: 15px; color: var(--dark-pink); font-weight: 600;">I love you, Priya! You've made my world perfect.</p>
+        <div class="cute-mascot" style="animation: float 2s infinite;">
+            <div class="mascot-face">
+                <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+                <div class="blush"><div class="blush-spot"></div><div class="blush-spot"></div></div>
+                <div class="smile"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Background Floating Hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.style.position = 'absolute';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '100vh';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.fontFamily = 'serif';
+            heart.style.color = '#ff6b81';
+            heart.style.opacity = Math.random() * 0.7 + 0.3;
+            heart.style.pointerEvents = 'none';
+            heart.style.animation = `floatUp ${Math.random() * 3 + 4}s linear forwards`;
+            
+            document.getElementById('heartsBg').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+        setInterval(createHeart, 300);
+
+        // Smart "No" Button evasion logic
+        function moveNoButton() {
+            const noBtn = document.getElementById('noBtn');
+            // Randomly shifting positions to make it impossible to click
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 50);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 50);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        // Success Celebration
+        function celebrate() {
+            document.getElementById('successScreen').classList.add('active');
+            // Extra intense hearts on success
+            setInterval(createHeart, 80);
+        }
+    </script>
+</body>
+</html>
